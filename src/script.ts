@@ -1,14 +1,12 @@
 import fetchData from "./fetchData.js";
+import normalizarTransacao from "./normalizarTransacao.js";
 
 
 async function handleData() {
-  const data = await fetchData<TransacaoAPI[]>("https://api.origamid.dev/json/transacoes.json");
+  const data = await fetchData<TransacaoAPI[]>("https://api.origamid.dev/json/transacoes.json?");
 
-  if (data) {
-    data.forEach((item) => {
-      console.log(item["Cliente Novo"]);
-    })
-  }
-  console.log('código continuou');
+  if (!data) return
+  const transacoes = data.map(normalizarTransacao)
+  console.log(transacoes.forEach(item => console.log(item.data.getHours())))
 }
 handleData()
